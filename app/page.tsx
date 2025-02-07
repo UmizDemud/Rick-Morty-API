@@ -4,7 +4,7 @@ export default async function Home({
   searchParams,
 }: {searchParams: Promise<{ [key: string]: string | string[] | undefined }>}) {
 
-  const keyList = ["status", "gender"];
+  const keyList = ["status", "gender", "page"];
   const sP = await searchParams
 
   const getCharacters = async () => {

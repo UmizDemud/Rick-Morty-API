@@ -2,6 +2,7 @@
 
 import {
   FC,
+  useState,
   useRef,
 } from 'react';
 import classNames from 'classnames';
@@ -20,12 +21,14 @@ type Props = {
   }
 };
 
-export const CharacterTable: FC<Props> = ({ characters, filters }) => {
+export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, filters }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const [page, setPage] = useState(currentPage);
   const router = useRouter();
 
   const handleClick = (key: "status" | "gender", value?: string) => {
     const newRoute = {...filters};
+    if ("page" in newRoute) delete newRoute.page
     if (!!value) {
       newRoute[key] = value as keyof typeof filters["status" | "gender"];
     } else {
@@ -37,6 +40,22 @@ export const CharacterTable: FC<Props> = ({ characters, filters }) => {
       if (i !== 0) { url += "&"} 
       url += `${item[0]}=${item[1]}`
     })
+    setPage(1);
+    router.push(url)
+  }
+
+  const paginate = (to: number) => {
+    const newRoute = {...filters};
+    if ("page" in newRoute) {
+      delete newRoute.page
+    }
+
+    let url = "?page=" + to
+
+    Object.entries(newRoute).map((item) => {
+      url += `&${item[0]}=${item[1]}`
+    })
+    setPage(to);
     router.push(url)
   }
 
@@ -128,6 +147,20 @@ export const CharacterTable: FC<Props> = ({ characters, filters }) => {
             ))}
         </tbody>
       </table>
+      <div className='flex gap-1 mx-auto'>
+      {Array(pageCount).fill(0).map((_, i) => (
+        <button
+          key={i}
+          className={classNames(
+            'border text-center w-8 py-1',
+            i + 1 === page && "bg-blue-500"
+          )}
+          onClick={() => paginate(i + 1)}
+        >
+          {i + 1}
+        </button>
+      ))}
+      </div>
     </>
   );
 };
