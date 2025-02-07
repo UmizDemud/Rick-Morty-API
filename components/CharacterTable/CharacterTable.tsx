@@ -4,18 +4,13 @@ import {
   FC,
   memo,
   useState,
-  ReactNode,
-  useEffect,
   useRef,
-  ChangeEvent,
 } from 'react';
 import classNames from 'classnames';
 import { Character } from '@/types/character';
-import { sortBy } from '@/utils/sortBy';
 import { CharacterRow } from './CharacterRow';
 import { CharacterHeader } from './CharacterHeader';
-import { debounce } from '@/utils/debounce';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   characters: Character[];
@@ -30,63 +25,16 @@ type Props = {
 export const CharacterTable: FC<Props> = memo(({ characters, pageCount, currentPage, filters }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [page, setPage] = useState(currentPage);
-  const [currentSortBy, setCurrentSortBy] = useState("");
-  const [isCurrentlyReversed, setIsCurrentlyReversed] = useState(false);
   const router = useRouter();
 
-  const sortCharacters = () => {
-    let res = characters.sort(
-      (a, b) => (a[currentSortBy] as string)?.localeCompare(b[currentSortBy])
-    );
 
-    if (isCurrentlyReversed)
-      res = res.reverse();
+  const [visibleCharacters, setVisibleCharacters] = useState(characters);
 
-    return res;
-  };
-
-  const handleSortClick = (nextSortBy: string) => {
-    // First click
-    if (!currentSortBy || nextSortBy !== currentSortBy) {
-      setCurrentSortBy(nextSortBy)
-      setIsCurrentlyReversed(false)
-    }
-
-    // Second click
-    if (currentSortBy === nextSortBy && !isCurrentlyReversed) {
-      setCurrentSortBy(nextSortBy)
-      setIsCurrentlyReversed(true)
-    }
-
-    // Third click
-    setCurrentSortBy("")
-    setIsCurrentlyReversed(false)
-  };
-
-  const [visibleCharacters, setVisibleCharacters] = useState(() => {
-    if (characters.length) {
-      return sortCharacters();
-    }
-
-    return [];
-  });
-
-  useEffect(() => {
-    //const preparedCharacters = filterCharacters(characters);
-
-    if (characters.length) {
-      setVisibleCharacters(sortCharacters());
-    } else {
-      setVisibleCharacters([]);
-    }
-  }, [currentSortBy, isCurrentlyReversed]);
-
-
-  const handleClick = (key: string, value?: string) => {
-    let newRoute: any = {...filters};
+  const handleClick = (key: "status" | "gender", value?: string) => {
+    const newRoute = {...filters};
     if ("page" in newRoute) delete newRoute.page
     if (!!value) {
-      newRoute[key] = value;
+      newRoute[key] = value as keyof typeof filters["status" | "gender"];
     } else {
       if (key in newRoute) delete newRoute[key]
     }
@@ -101,14 +49,14 @@ export const CharacterTable: FC<Props> = memo(({ characters, pageCount, currentP
   }
 
   const paginate = (to: number) => {
-    let newRoute: any = {...filters};
+    const newRoute = {...filters};
     if ("page" in newRoute) {
       delete newRoute.page
     }
 
     let url = "?page=" + to
 
-    Object.entries(newRoute).map((item, i) => {
+    Object.entries(newRoute).map((item) => {
       url += `&${item[0]}=${item[1]}`
     })
     setPage(to);
@@ -182,13 +130,13 @@ export const CharacterTable: FC<Props> = memo(({ characters, pageCount, currentP
       >
         <thead>
           <tr>
-            <CharacterHeader title={"Name"} currentSortBy={currentSortBy} handleSortClick={handleSortClick} />
-            <CharacterHeader title={"Species"} currentSortBy={currentSortBy} handleSortClick={handleSortClick} />
-            <CharacterHeader title={"Type"} currentSortBy={currentSortBy} handleSortClick={handleSortClick} />
-            <CharacterHeader title={"Gender"} currentSortBy={currentSortBy} handleSortClick={handleSortClick} />
-            <CharacterHeader title={"Status"} currentSortBy={currentSortBy} handleSortClick={handleSortClick} />
-            <CharacterHeader title={"Origin"} currentSortBy={currentSortBy} handleSortClick={handleSortClick} />
-            <CharacterHeader title={"Location"} currentSortBy={currentSortBy} handleSortClick={handleSortClick} />
+            <CharacterHeader title={"Name"} />
+            <CharacterHeader title={"Species"} />
+            <CharacterHeader title={"Type"} />
+            <CharacterHeader title={"Gender"} />
+            <CharacterHeader title={"Status"} />
+            <CharacterHeader title={"Origin"} />
+            <CharacterHeader title={"Location"} />
           </tr>
         </thead>
 
