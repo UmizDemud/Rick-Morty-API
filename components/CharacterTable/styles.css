@@ -1,0 +1,22 @@
+/* Target the scrollbar for the div with class .small_scroll_bar */
+.small_scroll_bar::-webkit-scrollbar {
+  width: 8px; /* Horizontal scrollbar width */
+  height: 8px; /* Vertical scrollbar height */
+}
+
+/* Style the track (background) */
+.small_scroll_bar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+/* Style the thumb (the draggable part of the scrollbar) */
+.small_scroll_bar::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+/* Style the thumb when hovering */
+.small_scroll_bar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

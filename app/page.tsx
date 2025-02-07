@@ -51,7 +51,7 @@ export default async function Home({
     <div className="w-full py-8 px-4">
 
       <div className="flex flex-col items-middle gap-4">
-        <CharacterTable characters={characters} filters={sP} pageCount={pageCount} currentPage={currentPage} />
+        <CharacterTable characters={[...characters]} filters={sP} pageCount={pageCount} currentPage={currentPage} />
       </div>
     </div>
   );

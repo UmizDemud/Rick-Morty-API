@@ -4,12 +4,16 @@ import {
   FC,
   useState,
   useRef,
+  useEffect,
 } from 'react';
 import classNames from 'classnames';
 import { Character } from '@/types/character';
 import { CharacterRow } from './CharacterRow';
 import { CharacterHeader } from './CharacterHeader';
 import { useRouter } from 'next/navigation';
+import { sortBy } from '@/utils/sortBy';
+
+import "./styles.css"
 
 type Props = {
   characters: Character[];
@@ -26,6 +30,34 @@ export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, 
   const [page, setPage] = useState(currentPage);
   const router = useRouter();
 
+  const sortCharacters = () => {
+
+    if (currentSortBy) {
+      let res = sortBy([...characters], currentSortBy);
+  
+      if (isCurrentlyReversed)
+        res = res.reverse();
+
+      return res;
+    }
+
+    return characters;
+  };
+
+  const [currentSortBy, setCurrentSortBy] = useState("");
+  const [isCurrentlyReversed, setIsCurrentlyReversed] = useState(false);
+  const [visibleCharacters, setVisibleCharacters] = useState(characters);
+
+  useEffect(() => {
+    //const preparedCharacters = filterCharacters(characters);
+
+    if (characters.length) {
+      setVisibleCharacters(sortCharacters());
+    } else {
+      setVisibleCharacters([]);
+    }
+  }, [currentSortBy, isCurrentlyReversed]);
+
   const handleClick = (key: "status" | "gender", value?: string) => {
     const newRoute = {...filters};
     if ("page" in newRoute) delete newRoute.page
@@ -40,8 +72,9 @@ export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, 
       if (i !== 0) { url += "&"} 
       url += `${item[0]}=${item[1]}`
     })
-    setPage(1);
-    router.push(url)
+
+    router.push(url);
+    window.location.href = url
   }
 
   const paginate = (to: number) => {
@@ -57,7 +90,29 @@ export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, 
     })
     setPage(to);
     router.push(url)
+    window.location.href = url;
   }
+
+   const handleSortClick = (nextSortBy: string) => {
+    // First click
+    if (!currentSortBy || nextSortBy !== currentSortBy) {
+      setCurrentSortBy(nextSortBy)
+      setIsCurrentlyReversed(false)
+
+      return
+    }
+
+    // Second click
+    if (currentSortBy === nextSortBy && !isCurrentlyReversed) {
+      setIsCurrentlyReversed(true)
+
+      return
+    }
+
+    // Third click
+    setCurrentSortBy("")
+    setIsCurrentlyReversed(false)
+  };
 
   return (
     <>
@@ -122,22 +177,22 @@ export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, 
         </div>
       </div>
       <table
-        className="table is-striped is-hoverable is-narrow is-fullwidth"
+        className="border-separate border-spacing-x-1"
       >
         <thead>
           <tr>
-            <CharacterHeader title={"Name"} />
-            <CharacterHeader title={"Species"} />
-            <CharacterHeader title={"Type"} />
-            <CharacterHeader title={"Gender"} />
-            <CharacterHeader title={"Status"} />
-            <CharacterHeader title={"Origin"} />
-            <CharacterHeader title={"Location"} />
+            <CharacterHeader isCurrentlyReversed={isCurrentlyReversed} objKey={"name"} title={"Name"} currentSortBy={currentSortBy} handleSortClick={handleSortClick} />
+            <CharacterHeader isCurrentlyReversed={isCurrentlyReversed} objKey={"species"} title={"Species"} currentSortBy={currentSortBy} handleSortClick={handleSortClick} />
+            <CharacterHeader isCurrentlyReversed={isCurrentlyReversed} objKey={"type"} title={"Type"} currentSortBy={currentSortBy} handleSortClick={handleSortClick} />
+            <CharacterHeader isCurrentlyReversed={isCurrentlyReversed} objKey={"gender"} title={"Gender"} currentSortBy={currentSortBy} handleSortClick={handleSortClick} />
+            <CharacterHeader isCurrentlyReversed={isCurrentlyReversed} objKey={"status"} title={"Status"} currentSortBy={currentSortBy} handleSortClick={handleSortClick} />
+            <CharacterHeader isCurrentlyReversed={isCurrentlyReversed} objKey={""} title={"Origin"} currentSortBy={currentSortBy} handleSortClick={handleSortClick} />
+            <CharacterHeader isCurrentlyReversed={isCurrentlyReversed} objKey={""} title={"Location"} currentSortBy={currentSortBy} handleSortClick={handleSortClick} />
           </tr>
         </thead>
 
         <tbody>
-          {characters.map((character, i) => (
+          {visibleCharacters.map((character, i) => (
             <CharacterRow
               key={i * 20 + character.id}
               character={character}
@@ -147,19 +202,21 @@ export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, 
             ))}
         </tbody>
       </table>
-      <div className='flex gap-1 mx-auto'>
-      {Array(pageCount).fill(0).map((_, i) => (
-        <button
-          key={i}
-          className={classNames(
-            'border text-center w-8 py-1',
-            i + 1 === page && "bg-blue-500"
-          )}
-          onClick={() => paginate(i + 1)}
-        >
-          {i + 1}
-        </button>
-      ))}
+      <div className='box-border p-2 mx-auto'>
+        <div className='p-2 small_scroll_bar max-w-96 rounded overflow-x-scroll box-border flex gap-2'>
+        {Array(pageCount).fill(0).map((_, i) => (
+          <button
+            key={i}
+            className={classNames(
+              'border rounded text-center w-8 py-1 shrink-0',
+              i + 1 === page && "bg-blue-500"
+            )}
+            onClick={() => paginate(i + 1)}
+          >
+            {i + 1}
+          </button>
+        ))}
+        </div>
       </div>
     </>
   );

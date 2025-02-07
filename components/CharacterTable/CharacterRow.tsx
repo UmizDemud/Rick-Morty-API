@@ -16,20 +16,17 @@ export const CharacterRow: FC<Props> = ({ character, searchString, slug }) => {
         { 'has-background-warning': slug === character.id.toString() },
       )}
     >
-      <td>
-        <a
-          className={`link${character.status !== 'alive' ? ' link--red' : ''}`}
-          href={`#/people/${character.id}${searchString.length ? `?${searchString}` : ''}`}
-        >
+      <td className="min-w-20 whitespace-nowrap" >
+        <span>
           {character.name}
-        </a>
+        </span>
       </td>
-      <td>{character.species}</td>
-      <td>{character.type}</td>
-      <td>{character.gender}</td>
-      <td>{character.status}</td>
-      <td>{character.origin.name}</td>
-      <td>{character.location.name}</td>
+      <td className="min-w-20  whitespace-nowrap" >{character.species}</td>
+      <td className="min-w-24  whitespace-nowrap" >{character.type}</td>
+      <td className="min-w-20  whitespace-nowrap" >{character.gender}</td>
+      <td className="min-w-20  whitespace-nowrap" >{character.status}</td>
+      <td className="min-w-24  whitespace-nowrap" >{character.origin.name}</td>
+      <td className="min-w-24  whitespace-nowrap" >{character.location.name}</td>
     </tr>
   );
 };
