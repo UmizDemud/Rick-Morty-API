@@ -2,7 +2,6 @@
 
 import {
   FC,
-  useState,
   useRef,
 } from 'react';
 import classNames from 'classnames';
