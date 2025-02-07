@@ -30,8 +30,13 @@ export default async function Home({
     const res = await fetch(url)
       .then(res => res.json());
 
-    const nextP = new URLSearchParams(res.info.next.split('?')[1])
-    const currentPage = parseInt(nextP.get('page') || "2") - 1;
+    let nextP: URLSearchParams | null = null;
+    let currentPage = 1;
+
+    if (res?.info?.next) {
+      nextP = new URLSearchParams(res.info.next.split('?')[1])
+      currentPage = parseInt(nextP.get('page') || "2") - 1;
+    }
 
     return {
       characters: res.results,
