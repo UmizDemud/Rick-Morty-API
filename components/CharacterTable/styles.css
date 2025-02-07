@@ -25,3 +25,9 @@ table tr:nth-child(even) {
   @apply rounded;
   @apply bg-yellow-100;
 }
+
+@media (prefers-color-scheme: dark) {
+  table tr:nth-child(even) {
+    @apply bg-cyan-800/35;
+  }
+}
