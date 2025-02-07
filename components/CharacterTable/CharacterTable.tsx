@@ -22,7 +22,7 @@ type Props = {
   }
 };
 
-export const CharacterTable: FC<Props> = memo(({ characters, pageCount, currentPage, filters }) => {
+export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, filters }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [page, setPage] = useState(currentPage);
   const router = useRouter();
@@ -167,4 +167,4 @@ export const CharacterTable: FC<Props> = memo(({ characters, pageCount, currentP
       </div>
     </>
   );
-});
+};
