@@ -193,13 +193,8 @@ export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, 
 
         <tbody>
           {visibleCharacters.map((character, i) => (
-            <CharacterRow
-              key={i * 20 + character.id}
-              character={character}
-              searchString={inputRef?.current?.value || ""}
-              slug={(i * 20 + character.id).toString()}
-            />
-            ))}
+            <CharacterRow key={character.id} character={character} />
+          ))}
         </tbody>
       </table>
       <div className='box-border p-2 mx-auto'>
