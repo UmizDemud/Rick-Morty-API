@@ -116,7 +116,7 @@ export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, 
     <>
       <div className='flex m-auto'>
         <div className='flex flex-col pr-2 border-r-2'>
-          <div className='text-right'>Status</div>
+          <div className='text-right text-lg'>Status</div>
           <div className='flex gap-2'>
             <button onClick={() => handleClick("status", "Alive")} className={
               classNames(
@@ -145,7 +145,7 @@ export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, 
           </div>
         </div>
         <div className='flex flex-col pl-2'>
-          <div className='text-left'>Gender</div>
+          <div className='text-left text-lg'>Gender</div>
           <div className='flex gap-2'>
             <button onClick={() => handleClick("gender", "Male")} className={
               classNames(

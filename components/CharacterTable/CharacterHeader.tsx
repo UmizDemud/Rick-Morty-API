@@ -21,8 +21,8 @@ export const CharacterHeader: FC<Props> = ({ objKey, title, handleSortClick, cur
           <span className="icon">
             {objKey && currentSortBy === objKey ?
               isCurrentlyReversed
-                ? <FaAngleDown />
-                : <FaAngleUp />
+                ? <FaAngleUp />
+                : <FaAngleDown />
             : <></>}
           </span>
         </div>

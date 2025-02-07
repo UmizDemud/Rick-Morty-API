@@ -20,3 +20,8 @@
 .small_scroll_bar::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+table tr:nth-child(even) {
+  @apply rounded;
+  @apply bg-yellow-100;
+}
