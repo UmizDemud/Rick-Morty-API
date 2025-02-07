@@ -4,18 +4,11 @@ import { Character } from '@/types/character';
 
 type Props = {
   character: Character;
-  searchString: string;
-  slug?: string;
 };
 
-export const CharacterRow: FC<Props> = ({ character, searchString, slug }) => {
+export const CharacterRow: FC<Props> = ({ character }) => {
   return (
-    <tr
-      data-cy="character"
-      className={classNames(
-        { 'has-background-warning': slug === character.id.toString() },
-      )}
-    >
+    <tr data-cy="character">
       <td className="min-w-20 whitespace-nowrap" >
         <span>
           {character.name}
