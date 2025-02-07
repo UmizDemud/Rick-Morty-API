@@ -2,7 +2,6 @@
 
 import {
   FC,
-  memo,
   useState,
   useRef,
 } from 'react';
@@ -26,9 +25,6 @@ export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [page, setPage] = useState(currentPage);
   const router = useRouter();
-
-
-  const [visibleCharacters, setVisibleCharacters] = useState(characters);
 
   const handleClick = (key: "status" | "gender", value?: string) => {
     const newRoute = {...filters};
@@ -141,7 +137,7 @@ export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, 
         </thead>
 
         <tbody>
-          {visibleCharacters.map((character, i) => (
+          {characters.map((character, i) => (
             <CharacterRow
               key={i * 20 + character.id}
               character={character}
