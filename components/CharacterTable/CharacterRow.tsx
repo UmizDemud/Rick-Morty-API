@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import { FC } from 'react';
 import { Character } from '@/types/character';
 
