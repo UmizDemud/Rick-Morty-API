@@ -3,7 +3,6 @@
 import {
   FC,
   useState,
-  useRef,
   useEffect,
 } from 'react';
 import classNames from 'classnames';
@@ -26,7 +25,6 @@ type Props = {
 };
 
 export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, filters }) => {
-  const inputRef = useRef<HTMLInputElement | null>(null);
   const [page, setPage] = useState(currentPage);
   const router = useRouter();
 
@@ -192,7 +190,7 @@ export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, 
         </thead>
 
         <tbody>
-          {visibleCharacters.map((character, i) => (
+          {visibleCharacters.map((character) => (
             <CharacterRow key={character.id} character={character} />
           ))}
         </tbody>
