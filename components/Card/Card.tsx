@@ -30,7 +30,7 @@ export const Card: React.FC<Props> = ({res}) => {
     }
   }
 
-  const episodes = res.episode.map((ep: string, i: number) => {
+  const episodes = res.episode.map((ep: string) => {
     const epSpl = ep.split('/');
     const epNo = epSpl[epSpl.length - 1];
 
