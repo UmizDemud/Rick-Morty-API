@@ -9,9 +9,9 @@ export const CharacterRow: FC<Props> = ({ character }) => {
   return (
     <tr data-cy="character">
       <td className="min-w-20 whitespace-nowrap" >
-        <span>
+        <a href={`/character/${character.id}`} className='w-full'>
           {character.name}
-        </span>
+        </a>
       </td>
       <td className="min-w-20  whitespace-nowrap" >{character.species}</td>
       <td className="min-w-24  whitespace-nowrap" >{character.type}</td>

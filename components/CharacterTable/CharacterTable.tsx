@@ -32,7 +32,7 @@ export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, 
 
     if (currentSortBy) {
       let res = sortBy([...characters], currentSortBy);
-  
+
       if (isCurrentlyReversed)
         res = res.reverse();
 
@@ -57,7 +57,7 @@ export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, 
   }, [currentSortBy, isCurrentlyReversed]);
 
   const handleClick = (key: "status" | "gender", value?: string) => {
-    const newRoute = {...filters};
+    const newRoute = { ...filters };
     if ("page" in newRoute) delete newRoute.page
     if (!!value) {
       newRoute[key] = value as keyof typeof filters["status" | "gender"];
@@ -67,7 +67,7 @@ export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, 
 
     let url = "?";
     Object.entries(newRoute).map((item, i) => {
-      if (i !== 0) { url += "&"} 
+      if (i !== 0) { url += "&" }
       url += `${item[0]}=${item[1]}`
     })
 
@@ -76,7 +76,7 @@ export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, 
   }
 
   const paginate = (to: number) => {
-    const newRoute = {...filters};
+    const newRoute = { ...filters };
     if ("page" in newRoute) {
       delete newRoute.page
     }
@@ -91,7 +91,7 @@ export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, 
     window.location.href = url;
   }
 
-   const handleSortClick = (nextSortBy: string) => {
+  const handleSortClick = (nextSortBy: string) => {
     // First click
     if (!currentSortBy || nextSortBy !== currentSortBy) {
       setCurrentSortBy(nextSortBy)
@@ -147,6 +147,18 @@ export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, 
         <div className='flex flex-col pl-2'>
           <div className='text-left text-lg'>Gender</div>
           <div className='flex gap-2'>
+            <button onClick={() => handleClick("gender")} className={
+              classNames(
+                'border px-2 py-1 hover:bg-slate-500',
+                filters?.gender !== "Male" && filters?.gender !== "Female" && filters?.gender !== "unknown" && "bg-blue-500"
+              )
+            }>All</button>
+            <button onClick={() => handleClick("gender", "unknown")} className={
+              classNames(
+                'border px-2 py-1 hover:bg-slate-500',
+                filters?.gender === "unknown" && "bg-blue-500"
+              )
+            }>Unknown</button>
             <button onClick={() => handleClick("gender", "Male")} className={
               classNames(
                 'border px-2 py-1 hover:bg-slate-500',
@@ -159,18 +171,6 @@ export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, 
                 filters?.gender === "Female" && "bg-blue-500"
               )
             }>Female</button>
-            <button onClick={() => handleClick("gender", "unknown")} className={
-              classNames(
-                'border px-2 py-1 hover:bg-slate-500',
-                filters?.gender === "unknown" && "bg-blue-500"
-              )
-            }>Unknown</button>
-            <button onClick={() => handleClick("gender")} className={
-              classNames(
-                'border px-2 py-1 hover:bg-slate-500',
-                filters?.gender !== "Male" && filters?.gender !== "Female" && filters?.gender !== "unknown" && "bg-blue-500"
-              )
-            }>All</button>
           </div>
         </div>
       </div>
@@ -197,18 +197,18 @@ export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, 
       </table>
       <div className='box-border p-2 mx-auto'>
         <div className='p-2 small_scroll_bar max-w-96 rounded overflow-x-scroll box-border flex gap-2'>
-        {Array(pageCount).fill(0).map((_, i) => (
-          <button
-            key={i}
-            className={classNames(
-              'border rounded text-center w-8 py-1 shrink-0',
-              i + 1 === page && "bg-blue-500"
-            )}
-            onClick={() => paginate(i + 1)}
-          >
-            {i + 1}
-          </button>
-        ))}
+          {Array(pageCount).fill(0).map((_, i) => (
+            <button
+              key={i}
+              className={classNames(
+                'border rounded text-center w-8 py-1 shrink-0',
+                i + 1 === page && "bg-blue-500"
+              )}
+              onClick={() => paginate(i + 1)}
+            >
+              {i + 1}
+            </button>
+          ))}
         </div>
       </div>
     </>
