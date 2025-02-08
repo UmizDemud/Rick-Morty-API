@@ -30,34 +30,29 @@ export const Card: React.FC<Props> = ({res}) => {
     }
   }
 
+  const episodes = res.episode.map((ep: string, i: number) => {
+    const epSpl = ep.split('/');
+    const epNo = epSpl[epSpl.length - 1];
+
+    return epNo
+  }).join(', ')
+
   return (
     <button onClick={handleClick} ref={buttonRef}>
-      <div className="mt-12 rounded bg-slate-200 shadow-lg px-2 py-4">
+      <div className="dark:text-slate-800 mt-12 w-80 rounded bg-slate-200 shadow-lg px-2 py-4">
         <div className="flex gap-1"><span className="text-lg">{res.name}</span></div>
-        <img src={res.image} alt="origin place" />
+        <img className="rounded m-auto" src={res.image} alt="origin place" />
 
-        <div className="pt-4 flex justify-between border-b border-slate-800/40"><span>Status:</span><span>{res.status}</span></div>
-        <div className="flex justify-between border-b border-slate-800/40"><span>Species:</span><span>{res.species}</span></div>
-        <div className="flex justify-between border-b border-slate-800/40"><span>Type:</span><span>{res.type || '-'}</span></div>
-        <div className="flex justify-between border-b border-slate-800/40"><span>Gender:</span><span>{res.gender}</span></div>
-        <div className="flex justify-between border-b border-slate-800/40"><span>Origin:</span><span>{res.origin.name}</span></div>
-        <div className="flex justify-between border-b border-slate-800/40"><span>Location:</span><span>{res.location.name}</span></div>
-        <div className="flex justify-between"><span>Episodes: </span>
-          <div className="flex gap-1">
-            {res.episode.map((ep: string, i: number) => {
-              const epSpl = ep.split('/');
-              const epNo = epSpl[epSpl.length - 1];
+        <div className="pt-4 flex justify-between border-b border-slate-800/40"><span>Status:</span><div className="overflow-hidden text-ellipsis whitespace-nowrap max-w-48">{res.status}</div></div>
+        <div className="flex justify-between border-b border-slate-800/40"><span>Species:</span><div className="overflow-hidden text-ellipsis whitespace-nowrap max-w-48">{res.species}</div></div>
+        <div className="flex justify-between border-b border-slate-800/40"><span>Type:</span><div className="overflow-hidden text-ellipsis whitespace-nowrap max-w-48">{res.type || '-'}</div></div>
+        <div className="flex justify-between border-b border-slate-800/40"><span>Gender:</span><div className="overflow-hidden text-ellipsis whitespace-nowrap max-w-48">{res.gender}</div></div>
+        <div className="flex justify-between border-b border-slate-800/40"><span>Origin:</span><div className="overflow-hidden text-ellipsis whitespace-nowrap max-w-48">{res.origin.name}</div></div>
+        <div className="flex justify-between border-b border-slate-800/40"><span>Location:</span><div className="overflow-hidden text-ellipsis whitespace-nowrap max-w-48">{res.location.name}</div></div>
+        <div className="flex justify-between gap-1 overflow-hidden min-w-0"><span>Episodes: </span>
+          <div className="max-w-48 text-ellipsis flex gap-1 min-w-0">
+          <span className="whitespace-nowrap text-ellipsis overflow-hidden">{episodes}</span>
 
-              if (i !== res.episode.length - 1) {
-                return (
-                  <span key={epNo}>{epNo}, </span>
-                )
-              }
-
-              return (
-                <span key={epNo}>{epNo}</span>
-              )
-            })}
           </div>
         </div>
       </div>
