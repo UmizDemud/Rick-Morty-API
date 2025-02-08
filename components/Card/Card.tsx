@@ -39,8 +39,8 @@ export const Card: React.FC<Props> = ({res}) => {
 
   return (
     <button onClick={handleClick} ref={buttonRef}>
-      <div className="dark:text-slate-800 mt-12 w-80 rounded bg-slate-200 shadow-lg px-2 py-4">
-        <div className="flex gap-1"><span className="text-lg">{res.name}</span></div>
+      <div className="dark:text-slate-800 mt-12 w-80 rounded bg-slate-200 shadow-lg px-2 py-2">
+        <div className="flex gap-1"><span className="text-xl underline mb-2">{res.name}</span></div>
         <img className="rounded m-auto" src={res.image} alt="origin place" />
 
         <div className="pt-4 flex justify-between border-b border-slate-800/40"><span>Status:</span><div className="overflow-hidden text-ellipsis whitespace-nowrap max-w-48">{res.status}</div></div>
