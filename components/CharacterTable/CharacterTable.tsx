@@ -175,7 +175,7 @@ export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, 
         </div>
       </div>
 
-      <div className='rounded shadow-lg shadow-slate-800  box-border pb-2 px-3 mx-auto mb-4'>
+      <div className='border-b border-1 box-border pb-2 px-3 mx-auto mb-4'>
         <div className='p-2 small_scroll_bar max-w-96 rounded overflow-x-scroll box-border flex gap-2'>
           {Array(pageCount).fill(0).map((_, i) => (
             <button
