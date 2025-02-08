@@ -115,59 +115,59 @@ export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, 
   return (
     <>
       <div className='flex m-auto'>
-        <div className='flex flex-col pr-2 border-r-2'>
-          <div className='text-right text-lg'>Status</div>
+        <div className='flex flex-col pr-2 border-r-2 '>
+          <div className='text-right text-lg pb-1'>Status</div>
           <div className='flex gap-2'>
             <button onClick={() => handleClick("status", "Alive")} className={
               classNames(
-                'border px-2 py-1 hover:bg-slate-500',
+                'border px-2 py-1 hover:bg-slate-500 rounded',
                 filters?.status === "Alive" && "bg-blue-500"
               )
             }>Alive</button>
             <button onClick={() => handleClick("status", "Dead")} className={
               classNames(
-                'border px-2 py-1 hover:bg-slate-500',
+                'border px-2 py-1 hover:bg-slate-500 rounded',
                 filters?.status === "Dead" && "bg-blue-500"
               )
             }>Dead</button>
             <button onClick={() => handleClick("status", "unknown")} className={
               classNames(
-                'border px-2 py-1 hover:bg-slate-500',
+                'border px-2 py-1 hover:bg-slate-500 rounded',
                 filters?.status === "unknown" && "bg-blue-500"
               )
             }>Unknown</button>
             <button onClick={() => handleClick("status")} className={
               classNames(
-                'border px-2 py-1 hover:bg-slate-500',
+                'border px-2 py-1 hover:bg-slate-500 rounded',
                 filters?.status !== "Alive" && filters?.status !== "Dead" && filters?.status !== "unknown" && "bg-blue-500"
               )
             }>All</button>
           </div>
         </div>
         <div className='flex flex-col pl-2'>
-          <div className='text-left text-lg'>Gender</div>
+          <div className='text-left text-lg pb-1'>Gender</div>
           <div className='flex gap-2'>
             <button onClick={() => handleClick("gender")} className={
               classNames(
-                'border px-2 py-1 hover:bg-slate-500',
+                'border px-2 py-1 hover:bg-slate-500 rounded',
                 filters?.gender !== "Male" && filters?.gender !== "Female" && filters?.gender !== "unknown" && "bg-blue-500"
               )
             }>All</button>
             <button onClick={() => handleClick("gender", "unknown")} className={
               classNames(
-                'border px-2 py-1 hover:bg-slate-500',
+                'border px-2 py-1 hover:bg-slate-500 rounded',
                 filters?.gender === "unknown" && "bg-blue-500"
               )
             }>Unknown</button>
             <button onClick={() => handleClick("gender", "Male")} className={
               classNames(
-                'border px-2 py-1 hover:bg-slate-500',
+                'border px-2 py-1 hover:bg-slate-500 rounded',
                 filters?.gender === "Male" && "bg-blue-500"
               )
             }>Male</button>
             <button onClick={() => handleClick("gender", "Female")} className={
               classNames(
-                'border px-2 py-1 hover:bg-slate-500',
+                'border px-2 py-1 hover:bg-slate-500 rounded',
                 filters?.gender === "Female" && "bg-blue-500"
               )
             }>Female</button>
@@ -175,13 +175,13 @@ export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, 
         </div>
       </div>
 
-      <div className='box-border p-2 mx-auto'>
+      <div className='rounded shadow-lg shadow-slate-800  box-border pb-2 px-3 mx-auto mb-4'>
         <div className='p-2 small_scroll_bar max-w-96 rounded overflow-x-scroll box-border flex gap-2'>
           {Array(pageCount).fill(0).map((_, i) => (
             <button
               key={i}
               className={classNames(
-                'border rounded text-center w-8 py-1 shrink-0',
+                'rounded text-center border border-slate-700 w-8 py-1 shrink-0 hover:bg-slate-500 transition',
                 i + 1 === page && "bg-blue-500"
               )}
               onClick={() => paginate(i + 1)}
