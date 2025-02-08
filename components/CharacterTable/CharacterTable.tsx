@@ -174,6 +174,24 @@ export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, 
           </div>
         </div>
       </div>
+
+      <div className='box-border p-2 mx-auto'>
+        <div className='p-2 small_scroll_bar max-w-96 rounded overflow-x-scroll box-border flex gap-2'>
+          {Array(pageCount).fill(0).map((_, i) => (
+            <button
+              key={i}
+              className={classNames(
+                'border rounded text-center w-8 py-1 shrink-0',
+                i + 1 === page && "bg-blue-500"
+              )}
+              onClick={() => paginate(i + 1)}
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <table
         className="border-separate border-spacing-x-1"
       >
@@ -195,22 +213,6 @@ export const CharacterTable: FC<Props> = ({ characters, pageCount, currentPage, 
           ))}
         </tbody>
       </table>
-      <div className='box-border p-2 mx-auto'>
-        <div className='p-2 small_scroll_bar max-w-96 rounded overflow-x-scroll box-border flex gap-2'>
-          {Array(pageCount).fill(0).map((_, i) => (
-            <button
-              key={i}
-              className={classNames(
-                'border rounded text-center w-8 py-1 shrink-0',
-                i + 1 === page && "bg-blue-500"
-              )}
-              onClick={() => paginate(i + 1)}
-            >
-              {i + 1}
-            </button>
-          ))}
-        </div>
-      </div>
     </>
   );
 };
