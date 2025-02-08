@@ -8,7 +8,7 @@ export default async function Page({
   const { id } = await params;
 
   const getCharacter = async () => {
-    let url = `https://rickandmortyapi.com/api/character/${id}`
+    const url = `https://rickandmortyapi.com/api/character/${id}`
 
     const res = await fetch(url)
       .then(res => res.json());
